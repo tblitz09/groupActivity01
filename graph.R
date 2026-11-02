@@ -18,12 +18,12 @@ summary(mydata)    # what is the range of each variable?
 # Step 1: look before you model
 # Note: edit the code to match your variable names and units
 
-plot(mydata$x, mydata$y,
-     xlab = "x (units)", ylab = "y (units)",
+plot(mydata$advertising, mydata$sales,
+     xlab = "advertisement budget (thousands $)", ylab = "month's revenue (thousands $)",
      main = "y versus x", pch = 19, col = "steelblue")
 
 # Step 2: fit a straight line
-model <- lm(y ~ x, data = mydata) # edit x and y to match your variable names
+model <- lm(sales ~ advertising, data = mydata) # edit x and y to match your variable names
 model # the two numbers printed are the intercept and the slope
 
 # Step 3: draw the line on top of the points
