@@ -13,3 +13,4 @@ Can the company use the line to predict sales for an advertising budget it has n
 - A company could use it because the residual is low for the data. They could predict using it however prediction may not be the exact value if tried. 
 
 Does the fitted line prove that advertising expenditure causes higher sales?
+- To infer causation, we would need more data. For example we could run an experiment where we control for other factors effecting revenue and then test weather changing only the advertising budget, causes an increase in revenue. This data by itself only shows correlation, not causation.
