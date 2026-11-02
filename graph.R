@@ -20,7 +20,7 @@ summary(mydata)    # what is the range of each variable?
 
 plot(mydata$advertising, mydata$sales,
      xlab = "advertisement budget (thousands $)", ylab = "month's revenue (thousands $)",
-     main = "y versus x", pch = 19, col = "steelblue")
+     main = "advertisement budget v month revenue", pch = 19, col = "steelblue")
 
 # Step 2: fit a straight line
 model <- lm(sales ~ advertising, data = mydata) # edit x and y to match your variable names
@@ -30,14 +30,14 @@ model # the two numbers printed are the intercept and the slope
 abline(model, col = "red", lwd = 2)
 
 # Step 4: use the line to predict y for new x values
-new_points <- tibble(x = c(10, 20)) # the column name must match your x variable's name
+new_points <- tibble(advertising = c(10, 20)) # the column name must match your x variable's name
 predict(model, newdata = new_points)
 predict(model, newdata = new_points, interval = "prediction")  # a range, not just one number
 
 # Step 5: how far is each point from the line?
 residuals(model)
-plot(mydata$x, residuals(model), pch = 19,
-     xlab = "x", ylab = "Residual (observed - predicted)")
+plot(mydata$advertising, residuals(model), pch = 19,
+     xlab = "advertisement budget (thousands $)", ylab = "Residual (observed - predicted)")
 abline(h = 0, lty = 2)                         # a good line leaves residuals scattered around 0
 
 # Step 6: the full report
