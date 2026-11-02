@@ -1,0 +1,15 @@
+---
+title: "researchQuestions"
+output: html_document
+---
+
+Does the fitted line suggest that higher advertising expenditure is associated with higher sales?
+- The fitted line shows a positive correlation between advertisement budget and sales revenue. As advertisement budget goes up, the sale is predicted to rise as well. 
+
+If the company increases its advertising budget by $1,000, how could the line help estimate the change in sales?
+- The slope of the fitted line that can be used to predict the progression of the graph has a value of 4.443. Meaning for every one thousand dollars added to the advertisement budget, it is predicted that the sales revenue will rise by $4,443.
+
+Can the company use the line to predict sales for an advertising budget it has never tried?
+- A company could use it because the residual is low for the data. They could predict using it however prediction may not be the exact value if tried. 
+
+Does the fitted line prove that advertising expenditure causes higher sales?
