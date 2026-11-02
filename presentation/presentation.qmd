@@ -1,0 +1,260 @@
+---
+pagetitle: "Advertising and monthly sales"
+format:
+  revealjs:
+    theme: simple
+    css: presentation.css
+    background-color: "#fafbf9"
+    width: 1200
+    height: 675
+    margin: 0.07
+    center: false
+    slide-number: c/t
+    transition: fade
+    transition-speed: slow
+    controls: true
+    progress: true
+    navigation-mode: linear
+    embed-resources: true
+    html-math-method: plain
+    title-slide: false
+    auto-stretch: false
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+#| include: false
+d <- read.csv("../data/group2_advertising_sales.csv")
+stopifnot(nrow(d)==16, all(complete.cases(d)))
+model <- lm(sales ~ advertising, data=d)
+s <- summary(model)
+pred <- predict(model, data.frame(advertising=20), interval="prediction")
+source("charts.R")
+```
+
+## {.unnumbered .cover}
+
+::: {.eyebrow}
+Group 2 · Linear regression
+:::
+
+::: {.cover-title}
+Advertising and monthly sales
+:::
+
+::: {.lead}
+Is higher advertising expenditure associated with higher monthly sales?
+:::
+
+::: {.fragment}
+**16 months of data show a strong positive association.**
+:::
+
+::: notes
+About 30 seconds. This is our research question in one sentence. We use the group's supplied advertising and sales data. We examine association. The dataset does not establish a causal effect of advertising.
+:::
+
+## The data
+
+::: {.columns}
+::: {.column width="30%"}
+::: {.big-number}
+16
+:::
+monthly observations
+:::
+::: {.column width="70%"}
+
+| Measurement | Units | Observed range |
+|:--|:--|:--|
+| Advertising budget | $1,000 | 8–45 |
+| Monthly sales revenue | $1,000 | 167–337 |
+
+::: {.fragment}
+One row represents one month. All 16 rows contain both measurements.
+:::
+:::
+:::
+
+::: {.small}
+Source: group2_advertising_sales.csv. Units follow the group's graph.R labels.
+:::
+
+::: notes
+About 35 seconds. Advertising ranges from $8,000 to $45,000, and sales range from $167,000 to $337,000. Month is the row's time index. We fit ordinary least squares with sales as the response and advertising as the predictor.
+:::
+
+## Higher budgets accompany higher sales
+
+::: {.columns}
+::: {.column width="72%"}
+```{r}
+#| results: asis
+chart("fit")
+```
+:::
+::: {.column width="28%"}
+Points show the 16 months.
+
+::: {.fragment fragment-index="0"}
+The fitted line slopes upward.
+
+**R² = `r sprintf('%.3f', s$r.squared)`**
+
+::: {.small}
+The line explains about 92% of the variation in sales in this sample.
+:::
+:::
+:::
+:::
+
+::: notes
+About 45 seconds. First show the points, then advance once to draw the fitted line. A strong positive, roughly linear pattern appears. The points still vary around the line. R-squared describes sample variation explained by this model. It does not measure a causal effect or guarantee future performance. Chart source: supplied CSV, computed with lm(sales ~ advertising).
+:::
+
+## The fitted line
+
+::: {.equation}
+Predicted sales = **142.364 + 4.443 × advertising**
+:::
+
+::: {.small}
+Both sales and advertising use thousands of dollars.
+:::
+
+::: {.fragment .lead}
+An additional **$1,000 in advertising** corresponds to about **$4,443 higher predicted monthly sales**.
+:::
+
+::: {.fragment .small}
+The intercept predicts sales at zero advertising. Zero falls outside the observed range, so that interpretation requires caution.
+:::
+
+::: notes
+About 45 seconds. The fitted coefficients come from the dataset. The slope is an association across these months, not an estimated return from an advertising intervention. The model does not measure profit or control for other drivers of sales. A $1,000 budget difference is one unit of the advertising variable.
+:::
+
+## A $20,000 advertising budget
+
+::: {.columns}
+::: {.column width="70%"}
+```{r}
+#| results: asis
+chart("prediction")
+```
+:::
+::: {.column width="30%"}
+::: {.fragment fragment-index="0"}
+Predicted monthly sales
+
+**$`r format(round(pred[1]*1000), big.mark=',')`**
+:::
+
+::: {.fragment fragment-index="1"}
+95% prediction interval
+
+**$195,401–$267,058**
+
+::: {.small}
+A range for one new month under the model's assumptions.
+:::
+:::
+:::
+:::
+
+::: notes
+About 50 seconds. Advance once for the line and point estimate, then again for the orange prediction interval and point. The prediction uses the unrounded coefficients. Twenty thousand dollars lies within the observed range, so this is interpolation. We have more confidence here than far outside that range, but an individual month can vary substantially. The observed month with a $20,000 budget had $203,000 in sales, inside the interval. This is an in-sample illustration, not a held-out accuracy test. Conventional prediction intervals assume an adequate linear model with independent, constant-variance, normally distributed errors. Dependence across months or changing conditions could reduce reliability.
+:::
+
+## The slope test
+
+::: {.columns}
+::: {.column width="48%"}
+### Expectation from the plot
+
+The strong upward pattern suggests **p < 0.05** for the slope.
+
+::: {.small}
+Reconstructed expectation. The project files do not record a prediction made before the test.
+:::
+:::
+::: {.column width="52%"}
+::: {.fragment}
+### What `summary(model)` shows
+
+**p = 4.53 × 10⁻⁹**
+
+t = 12.69, df = 14
+
+Strong evidence against a zero slope, under the regression assumptions.
+:::
+:::
+:::
+
+::: {.small}
+Two-sided test: H₀: slope = 0. H₁: slope ≠ 0. A small p-value does not establish causation.
+:::
+
+::: notes
+About 45 seconds. The expectation is reconstructed from the scatterplot, not a documented pre-test prediction by the group. This p-value concerns the advertising coefficient. Under a zero population slope and the regression assumptions, a t-statistic at least this extreme in absolute value would be very unusual. The p-value is not the probability that the null hypothesis is true. The appendix includes the actual R summary output.
+:::
+
+## The discovery
+
+::: {.lead}
+A strong fitted line can support useful predictions while leaving the cause unresolved.
+:::
+
+::: {.fragment}
+**Advertising and sales also rise over time.** Seasonality or business growth could contribute to their association.
+:::
+
+::: {.fragment}
+Predictions within **$8,000–$45,000** have support from the observed budgets. Predictions beyond that range require extra caution.
+:::
+
+::: {.fragment .small}
+A randomized advertising experiment would provide stronger evidence about whether increasing the budget causes sales to rise.
+:::
+
+::: notes
+About 45 seconds. This is the project's main lesson about regression. Advertising has a correlation of about 0.972 with month in this dataset, and both advertising and sales increase over time. That creates a plausible concern about a time trend, but these data do not identify the actual cause. A low residual spread and a small p-value do not remove confounding. A new budget within the range is interpolation even if that exact budget was not observed. Our main seven slides take roughly five minutes. The remaining slides provide backup evidence.
+:::
+
+## Appendix: residual check
+
+::: {.columns}
+::: {.column width="70%"}
+```{r}
+#| results: asis
+chart("residual")
+```
+:::
+::: {.column width="30%"}
+Residual standard error
+
+**$`r format(round(s$sigma*1000),big.mark=',')`**
+
+::: {.small}
+No obvious curve appears, but 16 points provide limited evidence about model assumptions. Independence across months remains uncertain.
+:::
+:::
+:::
+
+::: notes
+Backup only. Residuals equal observed sales minus fitted sales, in thousands of dollars. The residual standard error is approximately $16,070. The plot gives a basic visual check of linearity and spread. It cannot establish independence or rule out influential observations, and we have not validated future prediction accuracy. Source: residuals(model) and summary(model)$sigma.
+:::
+
+## Appendix: reproducible R results
+
+```{r}
+#| echo: true
+summary(model)
+```
+
+::: notes
+Backup only. The presentation executes lm(sales ~ advertising, data=d) directly on the supplied 16-row CSV. All headline results come from this model. Sources: ../data/group2_advertising_sales.csv, read directly without copying, and the group's graph.R and researchQuestions.Rmd for context. The assignment screenshot asks for the question, data, scatterplot with fitted line, equation and slope, prediction and trust, p-value expectation and result, and main lesson. The assignment mentions Google Slides. The user explicitly requested Quarto for this deliverable.
+:::
