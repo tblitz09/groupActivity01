@@ -33,6 +33,7 @@ model <- lm(sales ~ advertising, data=d)
 s <- summary(model)
 pred <- predict(model, data.frame(advertising=20), interval="prediction")
 source("charts.R")
+money <- function(x) paste0("$", format(round(x * 1000), big.mark=",", trim=TRUE))
 ```
 
 ## {.unnumbered .cover}
@@ -118,7 +119,7 @@ About 45 seconds. First show the points, then advance once to draw the fitted li
 ## The fitted line
 
 ::: {.equation}
-Predicted sales = **142.364 + 4.443 × advertising**
+Predicted sales ≈ **`r sprintf("%.3f", coef(model)[1])` + `r sprintf("%.3f", coef(model)[2])` × advertising**
 :::
 
 ::: {.small}
@@ -126,7 +127,7 @@ Both sales and advertising use thousands of dollars.
 :::
 
 ::: {.fragment .lead}
-An additional **$1,000 in advertising** corresponds to about **$4,443 higher predicted monthly sales**.
+An additional **$1,000 in advertising** corresponds to about **`r money(coef(model)[2])` higher predicted monthly sales**.
 :::
 
 ::: {.fragment .small}
@@ -150,13 +151,13 @@ chart("prediction")
 ::: {.fragment fragment-index="0"}
 Predicted monthly sales
 
-**$`r format(round(pred[1]*1000), big.mark=',')`**
+**`r money(pred[1])`**
 :::
 
 ::: {.fragment fragment-index="1"}
 95% prediction interval
 
-**$195,401–$267,058**
+**`r money(pred[2])`–`r money(pred[3])`**
 
 ::: {.small}
 A range for one new month under the model's assumptions.
@@ -166,28 +167,32 @@ A range for one new month under the model's assumptions.
 :::
 
 ::: notes
-About 50 seconds. Advance once for the line and point estimate, then again for the orange prediction interval and point. The prediction uses the unrounded coefficients. Twenty thousand dollars lies within the observed range, so this is interpolation. We have more confidence here than far outside that range, but an individual month can vary substantially. The observed month with a $20,000 budget had $203,000 in sales, inside the interval. This is an in-sample illustration, not a held-out accuracy test. Conventional prediction intervals assume an adequate linear model with independent, constant-variance, normally distributed errors. Dependence across months or changing conditions could reduce reliability.
+About 50 seconds. Advance once for the line and point estimate, then again for the orange prediction interval and point. The prediction uses the unrounded coefficients. The displayed equation uses rounded coefficients, so hand calculation with it can differ by a few dollars. Twenty thousand dollars lies within the observed range, so this is interpolation. We have more confidence here than far outside that range, but an individual month can vary substantially. The observed month with a $20,000 budget had $203,000 in sales, inside the interval. This is an in-sample illustration, not a held-out accuracy test. Conventional prediction intervals assume an adequate linear model with independent, constant-variance, normally distributed errors. Dependence across months or changing conditions could reduce reliability. R documentation confirms prediction intervals refer to a single future observation, not a confidence interval for the mean: https://stat.ethz.ch/R-manual/R-devel/library/stats/html/predict.lm.html
+:::
+
+::: {.small}
+This budget lies within the observed range. Future accuracy is unvalidated, and dependence between months could make the interval unreliable.
 :::
 
 ## The slope test
 
 ::: {.columns}
 ::: {.column width="48%"}
-### Expectation from the plot
+### Before the test
 
-The strong upward pattern suggests **p < 0.05** for the slope.
+The project files contain **no recorded p-value prediction**.
 
 ::: {.small}
-Reconstructed expectation. The project files do not record a prediction made before the test.
+Looking at the plot now, a small p-value would be reasonable to expect. This is a retrospective interpretation.
 :::
 :::
 ::: {.column width="52%"}
 ::: {.fragment}
 ### What `summary(model)` shows
 
-**p = 4.53 × 10⁻⁹**
+**p = `r sprintf("%.2f", s$coefficients["advertising", "Pr(>|t|)"] * 1e9)` × 10⁻⁹**
 
-t = 12.69, df = 14
+t = `r sprintf("%.2f", s$coefficients["advertising", "t value"])`, df = `r df.residual(model)`
 
 Strong evidence against a zero slope, under the regression assumptions.
 :::
@@ -199,7 +204,7 @@ Two-sided test: H₀: slope = 0. H₁: slope ≠ 0. A small p-value does not est
 :::
 
 ::: notes
-About 45 seconds. The expectation is reconstructed from the scatterplot, not a documented pre-test prediction by the group. This p-value concerns the advertising coefficient. Under a zero population slope and the regression assumptions, a t-statistic at least this extreme in absolute value would be very unusual. The p-value is not the probability that the null hypothesis is true. The appendix includes the actual R summary output.
+About 45 seconds. The group's actual pre-test prediction cannot be recovered from the files. The expectation of a small p-value is a retrospective interpretation of the scatterplot. This p-value concerns the advertising coefficient. Under a zero population slope and the regression assumptions, a t-statistic at least this extreme in absolute value would be very unusual. The p-value is not the probability that the null hypothesis is true. The appendix includes the actual R summary output.
 :::
 
 ## The discovery
@@ -209,7 +214,7 @@ A strong fitted line can support useful predictions while leaving the cause unre
 :::
 
 ::: {.fragment}
-**Advertising and sales also rise over time.** Seasonality or business growth could contribute to their association.
+**Advertising and sales both trend upward over time.** A shared time trend could contribute to their association.
 :::
 
 ::: {.fragment}
@@ -236,7 +241,7 @@ chart("residual")
 ::: {.column width="30%"}
 Residual standard error
 
-**$`r format(round(s$sigma*1000),big.mark=',')`**
+**`r money(s$sigma)`**
 
 ::: {.small}
 No obvious curve appears, but 16 points provide limited evidence about model assumptions. Independence across months remains uncertain.
@@ -245,7 +250,7 @@ No obvious curve appears, but 16 points provide limited evidence about model ass
 :::
 
 ::: notes
-Backup only. Residuals equal observed sales minus fitted sales, in thousands of dollars. The residual standard error is approximately $16,070. The plot gives a basic visual check of linearity and spread. It cannot establish independence or rule out influential observations, and we have not validated future prediction accuracy. Source: residuals(model) and summary(model)$sigma.
+Backup only. Residuals equal observed sales minus fitted sales, in thousands of dollars. The residual standard error is `r money(s$sigma)` (rounded to the nearest dollar). The plot gives a basic visual check of linearity and spread. It cannot establish independence or rule out influential observations, and we have not validated future prediction accuracy. Source: residuals(model) and summary(model)$sigma. R documentation: https://stat.ethz.ch/R-manual/R-devel/library/stats/html/summary.lm.html
 :::
 
 ## Appendix: reproducible R results

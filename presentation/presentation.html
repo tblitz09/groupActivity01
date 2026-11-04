@@ -1259,7 +1259,7 @@ display:block!important;
 <section id="the-fitted-line" class="slide level2">
 <h2>The fitted line</h2>
 <div class="equation">
-<p>Predicted sales = <strong>142.364 + 4.443 × advertising</strong></p>
+<p>Predicted sales ≈ <strong>142.364 + 4.443 × advertising</strong></p>
 </div>
 <div class="small">
 <p>Both sales and advertising use thousands of dollars.</p>
@@ -1369,7 +1369,7 @@ Month 16: advertising 42, sales or residual 328.00 (thousands of dollars)
 </div>
 </div></div>
 <aside class="notes">
-<p>About 50 seconds. Advance once for the line and point estimate, then again for the orange prediction interval and point. The prediction uses the unrounded coefficients. Twenty thousand dollars lies within the observed range, so this is interpolation. We have more confidence here than far outside that range, but an individual month can vary substantially. The observed month with a $20,000 budget had $203,000 in sales, inside the interval. This is an in-sample illustration, not a held-out accuracy test. Conventional prediction intervals assume an adequate linear model with independent, constant-variance, normally distributed errors. Dependence across months or changing conditions could reduce reliability.</p>
+<p>About 50 seconds. Advance once for the line and point estimate, then again for the orange prediction interval and point. The prediction uses the unrounded coefficients. The displayed equation uses rounded coefficients, so hand calculation with it can differ by a few dollars. Twenty thousand dollars lies within the observed range, so this is interpolation. We have more confidence here than far outside that range, but an individual month can vary substantially. The observed month with a $20,000 budget had $203,000 in sales, inside the interval. This is an in-sample illustration, not a held-out accuracy test. Conventional prediction intervals assume an adequate linear model with independent, constant-variance, normally distributed errors. Dependence across months or changing conditions could reduce reliability. R documentation confirms prediction intervals refer to a single future observation, not a confidence interval for the mean: https://stat.ethz.ch/R-manual/R-devel/library/stats/html/predict.lm.html</p>
 <style type="text/css">
 span.MJX_Assistive_MathML {
 position:absolute!important;
@@ -1381,15 +1381,18 @@ width: 1px!important;
 overflow: hidden!important;
 display:block!important;
 }</style></aside>
+<div class="small">
+<p>This budget lies within the observed range. Future accuracy is unvalidated, and dependence between months could make the interval unreliable.</p>
+</div>
 </section>
 <section id="the-slope-test" class="slide level2">
 <h2>The slope test</h2>
 <div class="columns">
 <div class="column" style="width:48%;">
-<h3 id="expectation-from-the-plot">Expectation from the plot</h3>
-<p>The strong upward pattern suggests <strong>p &lt; 0.05</strong> for the slope.</p>
+<h3 id="before-the-test">Before the test</h3>
+<p>The project files contain <strong>no recorded p-value prediction</strong>.</p>
 <div class="small">
-<p>Reconstructed expectation. The project files do not record a prediction made before the test.</p>
+<p>Looking at the plot now, a small p-value would be reasonable to expect. This is a retrospective interpretation.</p>
 </div>
 </div><div class="column" style="width:52%;">
 <div class="fragment">
@@ -1403,7 +1406,7 @@ display:block!important;
 <p>Two-sided test: H₀: slope = 0. H₁: slope ≠ 0. A small p-value does not establish causation.</p>
 </div>
 <aside class="notes">
-<p>About 45 seconds. The expectation is reconstructed from the scatterplot, not a documented pre-test prediction by the group. This p-value concerns the advertising coefficient. Under a zero population slope and the regression assumptions, a t-statistic at least this extreme in absolute value would be very unusual. The p-value is not the probability that the null hypothesis is true. The appendix includes the actual R summary output.</p>
+<p>About 45 seconds. The group’s actual pre-test prediction cannot be recovered from the files. The expectation of a small p-value is a retrospective interpretation of the scatterplot. This p-value concerns the advertising coefficient. Under a zero population slope and the regression assumptions, a t-statistic at least this extreme in absolute value would be very unusual. The p-value is not the probability that the null hypothesis is true. The appendix includes the actual R summary output.</p>
 <style type="text/css">
 span.MJX_Assistive_MathML {
 position:absolute!important;
@@ -1422,7 +1425,7 @@ display:block!important;
 <p>A strong fitted line can support useful predictions while leaving the cause unresolved.</p>
 </div>
 <div class="fragment">
-<p><strong>Advertising and sales also rise over time.</strong> Seasonality or business growth could contribute to their association.</p>
+<p><strong>Advertising and sales both trend upward over time.</strong> A shared time trend could contribute to their association.</p>
 </div>
 <div class="fragment">
 <p>Predictions within <strong>$8,000–$45,000</strong> have support from the observed budgets. Predictions beyond that range require extra caution.</p>
@@ -1523,7 +1526,7 @@ Month 16: advertising 42, sales or residual -0.98 (thousands of dollars)
 </div>
 </div></div>
 <aside class="notes">
-<p>Backup only. Residuals equal observed sales minus fitted sales, in thousands of dollars. The residual standard error is approximately <span class="math inline">16, 070.<em>T</em><em>h</em><em>e</em><em>p</em><em>l</em><em>o</em><em>t</em><em>g</em><em>i</em><em>v</em><em>e</em><em>s</em><em>a</em><em>b</em><em>a</em><em>s</em><em>i</em><em>c</em><em>v</em><em>i</em><em>s</em><em>u</em><em>a</em><em>l</em><em>c</em><em>h</em><em>e</em><em>c</em><em>k</em><em>o</em><em>f</em><em>l</em><em>i</em><em>n</em><em>e</em><em>a</em><em>r</em><em>i</em><em>t</em><em>y</em><em>a</em><em>n</em><em>d</em><em>s</em><em>p</em><em>r</em><em>e</em><em>a</em><em>d</em>.<em>I</em><em>t</em><em>c</em><em>a</em><em>n</em><em>n</em><em>o</em><em>t</em><em>e</em><em>s</em><em>t</em><em>a</em><em>b</em><em>l</em><em>i</em><em>s</em><em>h</em><em>i</em><em>n</em><em>d</em><em>e</em><em>p</em><em>e</em><em>n</em><em>d</em><em>e</em><em>n</em><em>c</em><em>e</em><em>o</em><em>r</em><em>r</em><em>u</em><em>l</em><em>e</em><em>o</em><em>u</em><em>t</em><em>i</em><em>n</em><em>f</em><em>l</em><em>u</em><em>e</em><em>n</em><em>t</em><em>i</em><em>a</em><em>l</em><em>o</em><em>b</em><em>s</em><em>e</em><em>r</em><em>v</em><em>a</em><em>t</em><em>i</em><em>o</em><em>n</em><em>s</em>, <em>a</em><em>n</em><em>d</em><em>w</em><em>e</em><em>h</em><em>a</em><em>v</em><em>e</em><em>n</em><em>o</em><em>t</em><em>v</em><em>a</em><em>l</em><em>i</em><em>d</em><em>a</em><em>t</em><em>e</em><em>d</em><em>f</em><em>u</em><em>t</em><em>u</em><em>r</em><em>e</em><em>p</em><em>r</em><em>e</em><em>d</em><em>i</em><em>c</em><em>t</em><em>i</em><em>o</em><em>n</em><em>a</em><em>c</em><em>c</em><em>u</em><em>r</em><em>a</em><em>c</em><em>y</em>.<em>S</em><em>o</em><em>u</em><em>r</em><em>c</em><em>e</em> : <em>r</em><em>e</em><em>s</em><em>i</em><em>d</em><em>u</em><em>a</em><em>l</em><em>s</em>(<em>m</em><em>o</em><em>d</em><em>e</em><em>l</em>)<em>a</em><em>n</em><em>d</em><em>s</em><em>u</em><em>m</em><em>m</em><em>a</em><em>r</em><em>y</em>(<em>m</em><em>o</em><em>d</em><em>e</em><em>l</em>)</span>sigma.</p>
+<p>Backup only. Residuals equal observed sales minus fitted sales, in thousands of dollars. The residual standard error is <span class="math inline">16, 067(<em>r</em><em>o</em><em>u</em><em>n</em><em>d</em><em>e</em><em>d</em><em>t</em><em>o</em><em>t</em><em>h</em><em>e</em><em>n</em><em>e</em><em>a</em><em>r</em><em>e</em><em>s</em><em>t</em><em>d</em><em>o</em><em>l</em><em>l</em><em>a</em><em>r</em>).<em>T</em><em>h</em><em>e</em><em>p</em><em>l</em><em>o</em><em>t</em><em>g</em><em>i</em><em>v</em><em>e</em><em>s</em><em>a</em><em>b</em><em>a</em><em>s</em><em>i</em><em>c</em><em>v</em><em>i</em><em>s</em><em>u</em><em>a</em><em>l</em><em>c</em><em>h</em><em>e</em><em>c</em><em>k</em><em>o</em><em>f</em><em>l</em><em>i</em><em>n</em><em>e</em><em>a</em><em>r</em><em>i</em><em>t</em><em>y</em><em>a</em><em>n</em><em>d</em><em>s</em><em>p</em><em>r</em><em>e</em><em>a</em><em>d</em>.<em>I</em><em>t</em><em>c</em><em>a</em><em>n</em><em>n</em><em>o</em><em>t</em><em>e</em><em>s</em><em>t</em><em>a</em><em>b</em><em>l</em><em>i</em><em>s</em><em>h</em><em>i</em><em>n</em><em>d</em><em>e</em><em>p</em><em>e</em><em>n</em><em>d</em><em>e</em><em>n</em><em>c</em><em>e</em><em>o</em><em>r</em><em>r</em><em>u</em><em>l</em><em>e</em><em>o</em><em>u</em><em>t</em><em>i</em><em>n</em><em>f</em><em>l</em><em>u</em><em>e</em><em>n</em><em>t</em><em>i</em><em>a</em><em>l</em><em>o</em><em>b</em><em>s</em><em>e</em><em>r</em><em>v</em><em>a</em><em>t</em><em>i</em><em>o</em><em>n</em><em>s</em>, <em>a</em><em>n</em><em>d</em><em>w</em><em>e</em><em>h</em><em>a</em><em>v</em><em>e</em><em>n</em><em>o</em><em>t</em><em>v</em><em>a</em><em>l</em><em>i</em><em>d</em><em>a</em><em>t</em><em>e</em><em>d</em><em>f</em><em>u</em><em>t</em><em>u</em><em>r</em><em>e</em><em>p</em><em>r</em><em>e</em><em>d</em><em>i</em><em>c</em><em>t</em><em>i</em><em>o</em><em>n</em><em>a</em><em>c</em><em>c</em><em>u</em><em>r</em><em>a</em><em>c</em><em>y</em>.<em>S</em><em>o</em><em>u</em><em>r</em><em>c</em><em>e</em> : <em>r</em><em>e</em><em>s</em><em>i</em><em>d</em><em>u</em><em>a</em><em>l</em><em>s</em>(<em>m</em><em>o</em><em>d</em><em>e</em><em>l</em>)<em>a</em><em>n</em><em>d</em><em>s</em><em>u</em><em>m</em><em>m</em><em>a</em><em>r</em><em>y</em>(<em>m</em><em>o</em><em>d</em><em>e</em><em>l</em>)</span>sigma. R documentation: https://stat.ethz.ch/R-manual/R-devel/library/stats/html/summary.lm.html</p>
 <style type="text/css">
 span.MJX_Assistive_MathML {
 position:absolute!important;
